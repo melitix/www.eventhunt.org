@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: melitix
+  name: website-www-production
+  labels:
+    app: website-www-production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: website-www-production
+  template:
+    metadata:
+      labels:
+        app: website-www-production
+    spec:
+      containers:
+      - name: site
+        image: "ghcr.io/eventhunt-org/www.eventhunt.org:latest"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: melitix
+  name: website-www-production
+  labels:
+    app: website-www-production
+spec:
+  type: ClusterIP
+  selector:
+    app: website-www-production
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: melitix
+  name: website-www-production
+  labels:
+    app: website-www-production
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - www.eventhunt.org
+    - eventhunt.org
+    secretName: website-www-production-tls
+  rules:
+  - host: www.eventhunt.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: website-www-production
+            port:
+              number: 80

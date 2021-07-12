@@ -1,0 +1,65 @@
+baseurl: "https://EventHunt.org/"
+title: "EventHunt"
+theme: eh-theme-2024
+
+googleAnalytics: "G-"
+
+enableEmoji: true
+
+params:
+  description: ""
+  tagline: "An event manager for local community events."
+  mailchimpURL: ""
+  social:
+    mastodon: "https://nanobyte.cafe/@EventHunt"
+    facebook: "EventHuntHQ"
+    linkedin: "Melitix"
+    github: "eventhunt-org"
+  author:
+    email: "hey@melitix.com"
+    name: "Ricardo N Feliciano"
+
+copyright: "© 2024 Melitix"
+jsonFeedLimit: 10
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+menus:
+  mainLeft:
+  - name: "Mission"
+    pageRef: "/mission"
+    weight: 5
+  mainRight:
+  - name: "GitHub"
+    pageRef: "/blog"
+    weight: 5
+  - name: "Newsletter"
+    pageRef: "/newsletter"
+    weight: 10
+  - name: "Contact Us"
+    pageRef: "/contact"
+    weight: 15
+  social:
+  - identifier: "mastodon"
+    url: "https://nanobyte.cafe/@EventHunt"
+    pre: '<i class="fa-brands fa-mastodon"></i>'
+    params:
+      rel: me
+    weight: 5
+  - identifier: "facebook"
+    url: "https://www.facebook.com/EventHuntHQ"
+    pre: '<i class="fa-brands fa-facebook"></i>'
+    params:
+      rel: me
+    weight: 10
+  - identifier: "github"
+    url: "https://github.com/eventhunt-org"
+    pre: '<i class="fa-brands fa-github"></i>'
+    weight: 15
+  - identifier: "rss"
+    url: "/index.xml"
+    pre: '<i class="fa-solid fa-rss"></i>'
+    weight: 20

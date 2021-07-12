@@ -1,0 +1,11 @@
+{{ define "main" }}
+<article>
+	<h1>{{ .Title }}</h1>
+	<hr>
+	<div class="content">
+		{{ .Content }}
+		{{ partial "mailchimp-signup" . }}
+	</div>
+</article>
+{{ end }}
+

@@ -1,0 +1,107 @@
+body.section-blog{ // all blog pages
+	main{
+		margin: 50px auto;
+		max-width: 1200px;
+
+		.cat-header{
+			display: flex;
+			flex-wrap: wrap;
+
+			h2{
+				border-bottom: 4px solid var( --primary-color );
+				width: 100%;
+			}
+
+			span{
+				color: var( --almost-black );
+			}
+		}
+
+		div.articles{
+			display: grid;
+			grid-template-columns: repeat( auto-fill, minmax( 315px, 1fr));
+			grid-gap: 40px;
+			margin-top: 44px;
+		}
+
+		article{
+
+			.meta{
+				margin: 20px 0 10px;
+				color: var( --almost-black );
+				font-size: 1.4rem;
+				text-transform: uppercase;
+				font-weight: bold;
+
+				.label{
+					margin-right: 5px;
+					background-color: $ram-grey;
+					padding: 4px 6px;
+					color: white;
+				}
+			}
+
+			&.card{
+				.feature{
+					width: 100%;
+					height: auto;
+				}
+
+				h2{
+					font-size: 2.4rem;
+
+					a{
+						transition: 250ms color ease;
+
+						&:hover{
+							color: var( --primary-color );
+						}
+					}
+				}
+			}
+
+			&.full{
+				h1{
+					margin: 40px 0 10px;
+					text-align: left;
+					line-height: 1.2;
+					font-size: 5.2rem;
+				}
+
+				img{
+					max-width: 100%;
+				}
+			}
+		}
+	}
+
+}
+
+body.section-blog.section{ // only list page
+	main{
+		display: flex;
+		gap: 30px;
+
+		section.articles{
+			width: 70%;
+
+			h1{
+				text-align: left;
+				line-height: 95%;
+			}
+		}
+
+		aside{
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			width: 30%;
+
+			div{
+				border-radius: 16px;
+				background-color: white;
+				padding: 20px;
+			}
+		}
+	}
+}

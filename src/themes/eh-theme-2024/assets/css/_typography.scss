@@ -1,0 +1,50 @@
+
+body > header{
+
+	#main-nav{
+		font-size: 1.8rem;
+
+		li.ancestor > a{
+			font-weight: bold;
+		}
+	}
+
+	ul.menu li.active > a{
+		font-weight: bold;
+	}
+}
+
+
+main{
+	h2{
+		margin-bottom: 0;
+		font-size: 3.2rem;
+	}
+
+	a{
+		transition: 250ms color ease;
+		font-weight: bold;
+
+		&:hover{
+			color: mix(white, $primary-color, 16%);
+		}
+	}
+
+	.content a{
+		color: $tertiary-color;
+		font-weight: bold;
+	}
+
+	a.continue{
+		font-weight: bold;
+	}
+
+	a.comment{
+		font-weight: bold;
+	}
+}
+
+body > footer{
+	color: white;
+	font-size: 1.5rem;
+}

@@ -1,0 +1,52 @@
+/*-----------------------------------------------------------------------------
+ * Fonts
+ *---------------------------------------------------------------------------*/
+
+html{
+	font-size: 62.5%;
+}
+
+body{
+	color: black;
+	line-height: 1.5;
+	font-family: "Ubuntu", sans-serif;
+	font-size: 1.8rem;
+
+	a{
+		color: black;
+		text-decoration: none;
+
+		&:hover{
+			color: grey;
+		}
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5{
+	color: var( --heading-color );
+	font-family: "Rubik", sans-serif;
+	line-height: 100%;
+
+	a{
+		color: black;
+	}
+}
+
+h1{
+	text-align: center;
+	font-size: 7.6rem;
+}
+
+body > header{
+	color: black;
+	font-size: 1.6rem;
+	font-weight: 600;
+
+	a{
+		color: black;
+	}
+}

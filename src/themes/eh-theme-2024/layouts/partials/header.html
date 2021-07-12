@@ -1,0 +1,9 @@
+{{- $currentPage := . -}}
+<header>
+	<div>
+		<a class="site-title" href="/"><img class="site-logo" src="/favicon.png">{{ .Site.Title }}</a>
+		{{ partial "menu.html" (dict "menuID" "mainleft" "dir" "h" "page" .) }}
+	</div>
+	{{ partial "menu.html" (dict "menuID" "mainright" "dir" "h" "page" .) }}
+	<a class="toggle" onclick="toggleMainNav();"><span class="fa fa-bars"></span></a>
+</header>

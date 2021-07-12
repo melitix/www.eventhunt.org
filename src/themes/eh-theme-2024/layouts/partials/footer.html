@@ -1,0 +1,12 @@
+<footer>
+	<div class="standard">
+		<span class="normal">© {{ now.Format "2006" }} Melitix</span>
+		<span class="small">© Melitix</span>
+		<span class="site-title">{{ .Site.Title }}</span>
+			{{ partial "menu.html" (dict "menuID" "social" "dir" "h" "page" .) }}
+	</div>
+	<div class="banner">
+		<span>Sign up for our Newsletter</span>
+		<a class="btn alt" href="/newsletter">Sign up</a>
+	</div>
+</footer>

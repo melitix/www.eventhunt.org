@@ -1,0 +1,123 @@
+variables:
+  sbVer: &sb-ver "0.25.0"
+
+version: 2.1
+
+orbs:
+  docker: circleci/docker@2.4
+  k8s: circleci/kubernetes@1.3
+  sb: hubci/strawberry@0.8
+  notify: hubci/notify@0.1
+
+workflows:
+  build-n-test-wf:
+    jobs:
+      - sb/build:
+          version: *sb-ver
+          source: "src"
+          html-proofer: false
+          filters:
+            branches:
+              ignore: trunk
+      - docker/publish:
+          attach-at: "src"
+          deploy: false
+          registry: "ghcr.io"
+          image: "eventhunt-org/www.eventhunt.org"
+          lint-dockerfile: true
+          remote-docker-version: "20.10.24"
+          tag: "$CIRCLE_SHA1,<< pipeline.git.branch >>,<< pipeline.number >>"
+          requires:
+            - sb/build
+          filters:
+            branches:
+              ignore: trunk
+  build-n-preview-wf:
+    jobs:
+      - sb/build:
+          version: *sb-ver
+          source: "src"
+          html-proofer: false
+          strawberry-extra-flags: "-b https://preview.www.eventhunt.org/"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: preview
+      - docker/publish:
+          attach-at: "src"
+          registry: "ghcr.io"
+          image: "eventhunt-org/www.eventhunt.org"
+          remote-docker-version: "20.10.24"
+          tag: "$CIRCLE_SHA1,<< pipeline.number >>,latest"
+          requires:
+            - sb/build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: preview
+          context: gh-ctx
+      - deploy:
+          requires:
+            - docker/publish
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: preview
+          context:
+            - k8s-ctx
+  build-n-deploy-wf:
+    jobs:
+      - sb/build:
+          version: *sb-ver
+          source: "src"
+          html-proofer: false
+          filters:
+            branches:
+              only: trunk
+      - docker/publish:
+          attach-at: "src"
+          registry: "ghcr.io"
+          image: "eventhunt-org/www.eventhunt.org"
+          remote-docker-version: "20.10.24"
+          tag: "$CIRCLE_SHA1,<< pipeline.number >>,latest"
+          requires:
+            - sb/build
+          filters:
+            branches:
+              only: trunk
+          context: gh-ctx
+      - deploy:
+          requires:
+            - docker/publish
+          filters:
+            branches:
+              only: trunk
+          context:
+            - k8s-ctx
+
+jobs:
+  deploy:
+    docker:
+      - image: hubci/strawberry:0.25.0
+    steps:
+      - k8s/install-kubeconfig
+      - k8s/install-kubectl:
+          kubectl-version: "v1.30.2"
+      - when:
+          condition:
+            equal: [ "<< pipeline.git.tag >>", "preview" ]
+          steps:
+            - run:
+                name: "Deploy Preview"
+                command: kubectl set image --namespace=melitix deployment/website-www-preview site=ghcr.io/eventhunt-org/www.eventhunt.org:$CIRCLE_SHA1
+      - when:
+          condition:
+            not:
+              equal: [ "<< pipeline.git.tag >>", "preview" ]
+          steps:
+            - run:
+                name: "Deploy Production"
+                command: kubectl set image --namespace=melitix deployment/website-www-production site=ghcr.io/eventhunt-org/www.eventhunt.org:$CIRCLE_SHA1

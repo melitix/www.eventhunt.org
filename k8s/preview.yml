@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: melitix
+  name: website-www-preview
+  labels:
+    app: website-www-preview
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website-www-preview
+  template:
+    metadata:
+      labels:
+        app: website-www-preview
+    spec:
+      containers:
+      - name: site
+        image: "ghcr.io/eventhunt-org/www.eventhunt.org:latest"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: melitix
+  name: website-www-preview
+  labels:
+    app: website-www-preview
+spec:
+  type: ClusterIP
+  selector:
+    app: website-www-preview
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: melitix
+  name: website-www-preview
+  labels:
+    app: website-www-preview
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - preview.www.eventhunt.org
+    secretName: website-www-preview-tls
+  rules:
+  - host: preview.www.eventhunt.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: website-www-preview
+            port:
+              number: 80

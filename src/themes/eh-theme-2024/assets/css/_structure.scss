@@ -1,0 +1,114 @@
+.page-wrapper{
+	padding: 0 100px;
+}
+
+
+$border-curve: 10px;
+
+#main-nav{
+	margin-top: 50px;
+	height: 100px;
+	line-height: 100px;
+
+	.header-title{
+
+		.site-logo{
+			vertical-align: top;
+			margin-top: 20px;
+			height: 60px;
+		}
+
+		.site-title{
+			padding: 0 22px;
+		}
+
+		.section-title{
+			display: inline-block;
+		}
+	}
+
+	li{
+		padding: 0 10px;
+	}
+
+	ul.menu a + ul{
+		display: none;
+	}
+}
+
+
+/* default main block */
+main{
+	flex-grow: 1;
+	margin-top: 30px;
+	padding: 50px 60px;
+
+	h1{
+		margin-top: 0;
+	}
+}
+
+#TableOfContents{
+	width: auto;
+	padding: 0;
+}
+
+body > footer{
+
+
+	img.logo{
+		width: 100px;
+	}
+
+		a{
+			color: white;
+			text-decoration: none;
+			font-weight: bold;
+		}
+}
+
+dl{
+	dt {
+		display: inline;
+	}
+
+	dt + dt:before {
+		content: "(";
+	}
+	dt + dt:after {
+		content: ")";
+	}
+}
+
+
+/************************************************
+ * Type: page
+ * *********************************************/
+body.page main{
+	margin: 50px auto 70px;
+	padding-top: 50px;
+	width: 90%;
+	min-width: 330px;
+	max-width: 1000px;
+}
+
+
+
+/************************************************
+ * Type: skinny
+ * *********************************************/
+body.layout-skinny main{
+	margin: 50px auto 50px;
+	width: 100%;
+	max-width: 700px;
+}
+
+/************************************************
+ * <= 800px width
+ * *********************************************/
+@media(max-width: 800px){
+
+	main{
+		padding: 0 5%;
+	}
+}
