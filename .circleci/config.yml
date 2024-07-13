@@ -4,7 +4,7 @@ variables:
 version: 2.1
 
 orbs:
-  docker: circleci/docker@2.4
+  docker: circleci/docker@2.6
   k8s: circleci/kubernetes@1.3
   sb: hubci/strawberry@0.8
   notify: hubci/notify@0.1
@@ -23,6 +23,8 @@ workflows:
           attach-at: "src"
           deploy: false
           registry: "ghcr.io"
+          docker-username: "GITHUB_USER"
+          docker-password: "GITHUB_TOKEN"
           image: "eventhunt-org/www.eventhunt.org"
           lint-dockerfile: true
           remote-docker-version: "20.10.24"
@@ -47,6 +49,8 @@ workflows:
       - docker/publish:
           attach-at: "src"
           registry: "ghcr.io"
+          docker-username: "GITHUB_USER"
+          docker-password: "GITHUB_TOKEN"
           image: "eventhunt-org/www.eventhunt.org"
           remote-docker-version: "20.10.24"
           tag: "$CIRCLE_SHA1,<< pipeline.number >>,latest"
@@ -80,6 +84,8 @@ workflows:
       - docker/publish:
           attach-at: "src"
           registry: "ghcr.io"
+          docker-username: "GITHUB_USER"
+          docker-password: "GITHUB_TOKEN"
           image: "eventhunt-org/www.eventhunt.org"
           remote-docker-version: "20.10.24"
           tag: "$CIRCLE_SHA1,<< pipeline.number >>,latest"
