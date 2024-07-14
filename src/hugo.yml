@@ -34,7 +34,7 @@ menus:
     weight: 5
   mainRight:
   - name: "GitHub"
-    pageRef: "/blog"
+    url: "https://github.com/eventhunt-org"
     weight: 5
   - name: "Newsletter"
     pageRef: "/newsletter"
