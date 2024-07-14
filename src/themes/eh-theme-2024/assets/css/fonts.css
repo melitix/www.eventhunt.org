@@ -16,7 +16,7 @@ body{
 		color: black;
 		text-decoration: none;
 
-		&:hover{
+		&:hover:not(.toggle){
 			color: grey;
 		}
 	}
